@@ -31,7 +31,7 @@ class MeshData
     {
         $res = QueryBuilder::instance()
             ->setCollection($this->collection)
-            ->select('c.time, c.temp, c.humid')
+            ->select('c.id, c.time, c.temp, c.humid')
             ->findAll()
             ->toArray();
 
@@ -48,7 +48,7 @@ class MeshData
     {
         $res = QueryBuilder::instance()
             ->setCollection($this->collection)
-            ->select('c.time , c.temp, c.humid')
+            ->select('c.id, c.time , c.temp, c.humid')
             ->where('c.time = @time')
             ->params(['@time' => $time])
             ->find()
@@ -65,11 +65,12 @@ class MeshData
      */
     public function save(array $params)
     {
-        $params = array_merge($params, ['id' => md5(uniqid(rand(), true))]);
+        if (!isset($params['id'])) {
+            $params = array_merge($params, ['id' => md5(uniqid(rand(), true))]);
+        }
 
         $rid = QueryBuilder::instance()
         ->setCollection($this->collection)
-        // ->setPartitionKey('country')
         ->save($params);
 
         return $rid;
@@ -78,16 +79,15 @@ class MeshData
     /**
      * データを削除
      *
-     * @param string $time
+     * @param string $id
      * @return $res
      */
-    public function delete(string $time)
+    public function delete(string $id)
     {
         $res = QueryBuilder::instance()
             ->setCollection($this->collection)
-            // ->setPartitionKey('country')
-            ->where('c.time = @time')
-            ->params(['@time' => $time])
+            ->where('c.id = @id')
+            ->params(['@id' => $id])
             ->delete();
 
         return $res;
