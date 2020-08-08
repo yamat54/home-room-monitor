@@ -6,6 +6,9 @@ MESHで取得したメトリック(温度・湿度)のデータを可視化す�
 ## セットアップ
 
 ```
+$ composer install
+```
+```
 $ cp .env.example .env
 ```
 
