@@ -25,13 +25,18 @@ class MeshData
     /**
      * データを全件取得
      *
+     * @param int $offset
+     * @param int $limit
+     * @param string @order
      * @return $res
      */
-    public function findAll()
+    public function findAll(int $offset = 0, int $limit = 24, string $order = 'c.time DESC')
     {
         $res = QueryBuilder::instance()
             ->setCollection($this->collection)
             ->select('c.id, c.time, c.temp, c.humid')
+            ->order($order)
+            ->limit($limit)
             ->findAll()
             ->toArray();
 
