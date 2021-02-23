@@ -4,6 +4,7 @@ namespace App;
 
 use Jupitern\CosmosDb\CosmosDb;
 use Jupitern\CosmosDb\QueryBuilder;
+use App\Monkeypatch\CosmosDb\QueryBuilderCustom;
 
 class MeshData
 {
@@ -32,10 +33,11 @@ class MeshData
      */
     public function findAll(int $offset = 0, int $limit = 24, string $order = 'c.time DESC')
     {
-        $res = QueryBuilder::instance()
+        $res = QueryBuilderCustom::instance()
             ->setCollection($this->collection)
             ->select('c.id, c.time, c.temp, c.humid')
             ->order($order)
+            ->offset($offset)
             ->limit($limit)
             ->findAll()
             ->toArray();

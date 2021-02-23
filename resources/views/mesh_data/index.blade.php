@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>{{ config('app.name') }}</title>
@@ -29,6 +30,15 @@
                         </tr>
                         @endforeach
                     </table>
+                </div>
+                <div class="center">
+                    <ul class="pagination">
+                        <li class="@if($page == 1){{ 'disabled' }}@else{{ 'waves-effect' }}@endif"><a href="@if($page > 1){{ '/?page=' . ($page - 1) }}@else{{ '#!' }}@endif"><i class="material-icons">chevron_left</i></a></li>
+                        @for ($i = 1; $i <= $max_page; $i++)
+                        <li class="@if($page == $i){{ 'active' }}@else{{ 'waves-effect' }}@endif"><a href="/@if($i > 1){{ '?page=' . $i }}@endif">{{ $i }}</a></li>
+                        @endfor
+                        <li class="@if($page >= $max_page){{ 'disabled' }}@else{{ 'waves-effect' }}@endif"><a href="@if($page < $max_page){{ '/?page=' . ($page + 1) }}@else{{ '#!' }}@endif"><i class="material-icons">chevron_right</i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
