@@ -27,17 +27,22 @@ class MeshData
      * 検索データを取得
      *
      * @param array $filters
+     * @param int $offset
+     * @param int|null $limit
      * @param string $order
      * @return $res
      */
-    public function findSearch(array $filters, string $order = 'c.time DESC')
+    public function findSearch(array $filters, int $offset = 0, int $limit = null, string $order = 'c.time ASC')
     {
         $where = '';
         $params = [];
-        if (isset($filters['time']) && !empty($filters['time'])) {
-            $where .= 'c.time >= @time_start and c.time <= @time_end';
-            $params['@time_start'] = "{$filters['time']} 00:00:00";
-            $params['@time_end'] = "{$filters['time']} 23:59:59";
+        if (isset($filters['time_start']) && !empty($filters['time_start'])) {
+            $where .= '@time_start <= c.time';
+            $params['@time_start'] = "{$filters['time_start']} 00:00:00";
+        }
+        if (isset($filters['time_end']) && !empty($filters['time_end'])) {
+            $where .= ' and c.time <= @time_end';
+            $params['@time_end'] = "{$filters['time_end']} 23:59:59";
         }
         $res = QueryBuilderCustom::instance()
             ->setCollection($this->collection)
@@ -45,6 +50,8 @@ class MeshData
             ->where($where)
             ->params($params)
             ->order($order)
+            ->offset($offset)
+            ->limit($limit)
             ->findAll()
             ->toArray();
 
