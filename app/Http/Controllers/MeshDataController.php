@@ -9,16 +9,15 @@ class MeshDataController extends Controller
 {
     public function index(Request $request)
     {
-        $params = $request->input();
-        $page = isset($params['page']) ? $params['page'] : 1;
-        $limit = isset($params['limit']) ? $params['limit'] : 24;
-        $offset = $page > 1 ? ($page - 1) * $limit : 0;
+        $time = $request->get('time');
+        $time = !empty($time) ? $time : now()->format('Y-m-d');
+        $filters = [
+            'time' => $time,
+        ];
 
         $meshData = new MeshData();
-        $data = $meshData->findAll($offset, $limit);
+        $data = $meshData->findSearch($filters);
 
-        $max_page = 10;
-
-        return view('mesh_data.index', compact('data','page','max_page'));
+        return view('mesh_data.index', compact('data','time'));
     }
 }

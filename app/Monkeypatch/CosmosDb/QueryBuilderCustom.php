@@ -193,8 +193,8 @@ class QueryBuilderCustom
 
         $partitionValue = $this->partitionValue != null ? $this->partitionValue : null;
 
-        $offset = $this->offset != null ? (int)$this->offset : 0;
-        $limit = $this->limit != null ? (int)$this->limit : 24*365*10; // 初期値10年分
+        $offset = !empty($this->offset) ? (int)$this->offset : 0;
+        $limit = !empty($this->limit) ? (int)$this->limit : 24*365*10; // 初期値10年分
         $fields = !empty($this->fields) ? $this->fields : '*';
         $where = $this->where != "" ? "WHERE {$this->where}" : "";
         $order = $this->order != "" ? "ORDER BY {$this->order}" : "";

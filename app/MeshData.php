@@ -24,21 +24,27 @@ class MeshData
     }
 
     /**
-     * データを全件取得
+     * 検索データを取得
      *
-     * @param int $offset
-     * @param int $limit
-     * @param string @order
+     * @param array $filters
+     * @param string $order
      * @return $res
      */
-    public function findAll(int $offset = 0, int $limit = 24, string $order = 'c.time DESC')
+    public function findSearch(array $filters, string $order = 'c.time DESC')
     {
+        $where = '';
+        $params = [];
+        if (isset($filters['time']) && !empty($filters['time'])) {
+            $where .= 'c.time >= @time_start and c.time <= @time_end';
+            $params['@time_start'] = "{$filters['time']} 00:00:00";
+            $params['@time_end'] = "{$filters['time']} 23:59:59";
+        }
         $res = QueryBuilderCustom::instance()
             ->setCollection($this->collection)
             ->select('c.id, c.time, c.temp, c.humid')
+            ->where($where)
+            ->params($params)
             ->order($order)
-            ->offset($offset)
-            ->limit($limit)
             ->findAll()
             ->toArray();
 
