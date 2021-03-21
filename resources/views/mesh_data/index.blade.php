@@ -63,7 +63,7 @@
                 <div class="card">
                     <table>
                         <tr>
-                            <th>日時</th>
+                            <th>日時▼</th>
                             <th>温度</th>
                             <th>湿度</th>
                         </tr>
