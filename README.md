@@ -58,6 +58,3 @@ CosmosDBのデータを確認します。
 ```
 $ php artisan command:message read-db
 ```
-
-## デモサイト
-https://home-room-monitor.herokuapp.com
