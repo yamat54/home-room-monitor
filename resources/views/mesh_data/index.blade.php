@@ -7,7 +7,7 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script   src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="   crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
@@ -20,9 +20,7 @@
         });
     });
     function search(page) {
-        // if (!page) {
-            $('[name=page]').val(page);
-        // }
+        $('[name=page]').val(page);
         $('form').submit();
     }
     </script>
@@ -69,7 +67,7 @@
                         </tr>
                         @foreach ($data as $item)
                         <tr>
-                            <td>{{ $item->time }}</td>
+                            <td>{{ $item->created_at }}</td>
                             <td>{{ $item->temp }}℃</td>
                             <td>{{ $item->humid }}%</td>
                         </tr>
